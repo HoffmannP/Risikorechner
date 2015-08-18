@@ -2,137 +2,145 @@
 <head>
     <meta charset="utf-8">
     <title>Herzinfakt Risiokorechner</title>
-    <script src="lib/jquery.min.js"></script>
+    <script src="lib/zepto.min.js"></script>
     <script src="lib/underscore-min.js"></script>
     <script src="script.js"></script>
+    <style>
+        .error { color: red; }
+        .error:after {
+            content: "!";
+        }
+    </style>
 </head>
 <body>
-    <div class="form">
+    <form>
         <div class="properties">
             <div>
                 <label for="bpSys">Blutdruck systolisch mmHG</label>
-                <input id="bpSys" type="number" />
+                <input id="bpSys" type="text"/>
             </div>
             <div>
                 <label for="bpDias">Blutdruck diastolisch mmHG</label>
-                <input id="bpDias" type="number" />
+                <input id="bpDias" type="text"/>
             </div>
             <div>
                 <label for="age">Alter</label>
-                <input id="age" type="number" />
+                <input id="age" type="text" />
             </div>
             <div>
                 <label for="sex">Geschlecht</label>
-                <select id="sex"/>
-                <option></option>
-                <option>weiblich</option>
-                <option>männlich</option>
-            </select>
+                <select id="sex">
+                    <option></option>
+                    <option>weiblich</option>
+                    <option>männlich</option>
+                </select>
+            </div>
+            <div>
+                <label for="weight">Gewicht in kg</label>
+                <input id="weight" type="text"/>
+            </div>
+            <div>
+                <label for="height">Größe in cm</label>
+                <input id="height" type="text"/>
+            </div>
         </div>
-        <div>
-            <label for="weight">Gewicht in kg</label>
-            <input id="weight" type="number" />
+        <div class="risks">
+            <div>
+                <label for="stroke">Schlaganfall</label>
+                <input id="stroke" type="checkbox" />
+            </div>
+            <div>
+                <label for="heartDisease">korenare Herzerkrankung behandelt/unbehandelt</label>
+                <input id="heartDisease" type="checkbox" />
+            </div>
+            <div>
+                <label for="heartFailure">Herzinsuffizenz</label>
+                <input id="heartFailure" type="checkbox" />
+            </div>
+            <div>
+                <label for="highGradeRenalDysfunction">hochgradige Nierenfehlfunktion (Stadium ≥ 4)</label>
+                <input id="highGradeRenalDysfunction" type="checkbox" />
+            </div>
+            <div>
+                <label for="diabetesWithExtraRisks">Diabetes mit weiteren Zusatzrisiken</label>
+                <input id="diabetesWithExtraRisks" type="checkbox" />
+            </div>
+            <div>
+                <label for="intermittentClaudication">auffällige Schaufensterkrankheit (pAVK)</label>
+                <input id="intermittentClaudication" type="checkbox" />
+            </div>
+            <div>
+                <label for="diabetes">Diabetes ohne weiteren Endorganschaden</label>
+                <input id="diabetes" type="checkbox" />
+            </div>
+            <div>
+                <label for="moderatelyGradeRenalDysfunction">mäßiggradige Nierenfehlfunktion (Stadium 3)</label>
+                <input id="moderatelyGradeRenalDysfunction" type="checkbox" />
+            </div>
+            <div>
+                <label for="unobtrusiveClaudication">unauffällige Schaufensterkrankheit (pAVK)</label>
+                <input id="unobtrusiveClaudication" type="checkbox" />
+            </div>
+            <div>
+                <label for="smoking">Raucher/Raucherin</label>
+                <input id="smoking" type="checkbox" />
+            </div>
+            <div>
+                <label for="cholesterol">auffällige Blutfettwerte (Cholesterin)</label>
+                <input id="cholesterol" type="checkbox" />
+            </div>
+            <div>
+                <label for="inherited">Herz-/Gefäßerkrankungen der Eltern in frühen Jahren</label>
+                <input id="inherited" type="checkbox" />
+            </div>
         </div>
-        <div>
-            <label for="height">Größe in cm</label>
-            <input id="height" type="number" />
+        <div class="submit">
+            <button type="submit" class="calc">Risiko berechnen</button>
         </div>
+    </form>
+    <div class="result">
+        <table class="table" border="1">
+            <thead>
+                <tr>
+                    <td colspan="2"></td>
+                    <th colspan="5">Blutdruck systolisch/diastolisch in mmHg</th>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <th>normal/optimal<br>≤</th>
+                    <th>hochnormal <br>130/85</th>
+                    <th>Hypertonie Grad 1<br>140/90</th>
+                    <th>Hypertonie Grad 2<br>160/100</th>
+                    <th>Hypertonie Grad 3<br>≥</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th rowspan="5">Belastungsfaktoren</th>
+                    <th>1</th>
+                    <td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>2</th>
+                    <td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>3</th>
+                    <td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>4</th>
+                    <td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>5</th>
+                    <td></td><td></td><td></td><td></td><td></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="text"></div>
+        <div class="sexAge"></div>
+        <div class="BMI"></div>
     </div>
-    <div class="risks">
-        <div>
-            <label for="stroke">Schlaganfall</label>
-            <input id="stroke" type="checkbox" />
-        </div>
-        <div>
-            <label for="heartDisease">korenare Herzerkrankung behandelt/unbehandelt</label>
-            <input id="heartDisease" type="checkbox" />
-        </div>
-        <div>
-            <label for="heartFailure">Herzinsuffizenz</label>
-            <input id="heartFailure" type="checkbox" />
-        </div>
-        <div>
-            <label for="highGradeRenalDysfunction">hochgradige Nierenfehlfunktion (Stadium ≥ 4)</label>
-            <input id="highGradeRenalDysfunction" type="checkbox" />
-        </div>
-        <div>
-            <label for="diabetesWithExtraRisks">Diabetes mit weiteren Zusatzrisiken</label>
-            <input id="diabetesWithExtraRisks" type="checkbox" />
-        </div>
-        <div>
-            <label for="intermittentClaudication">auffällige Schaufensterkrankheit (pAVK)</label>
-            <input id="intermittentClaudication" type="checkbox" />
-        </div>
-        <div>
-            <label for="diabetes">Diabetes ohne weiteren Endorganschaden</label>
-            <input id="diabetes" type="checkbox" />
-        </div>
-        <div>
-            <label for="moderatelyGradeRenalDysfunction">mäßiggradige Nierenfehlfunktion (Stadium 3)</label>
-            <input id="moderatelyGradeRenalDysfunction" type="checkbox" />
-        </div>
-        <div>
-            <label for="unobtrusiveClaudication">unauffällige Schaufensterkrankheit (pAVK)</label>
-            <input id="unobtrusiveClaudication" type="checkbox" />
-        </div>
-        <div>
-            <label for="smoking">Raucher/Raucherin</label>
-            <input id="smoking" type="checkbox" />
-        </div>
-        <div>
-            <label for="cholesterol">auffällige Blutfettwerte (Cholesterin)</label>
-            <input id="cholesterol" type="checkbox" />
-        </div>
-        <div>
-            <label for="inherited">Herz-/Gefäßerkrankungen der Eltern in frühen Jahren</label>
-            <input id="inherited" type="checkbox" />
-        </div>
-    </div>
-    <div><button type="button" class="calc">Berechnen</button></div>
-</div>
-<div class="result">
-    <table class="table" border="1">
-        <thead>
-            <tr>
-                <td colspan="2"></td>
-                <th colspan="5">Blutdruck systolisch/diastolisch in mmHg</th>
-            </tr>
-            <tr>
-                <td colspan="2"></td>
-                <th>normal/optimal<br>≤</th>
-                <th>hochnormal <br>130/85</th>
-                <th>Hypertonie Grad 1<br>140/90</th>
-                <th>Hypertonie Grad 2<br>160/100</th>
-                <th>Hypertonie Grad 3<br>≥</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th rowspan="5">Belastungsfaktoren</th>
-                <th>1</th>
-                <td></td><td></td><td></td><td></td><td></td>
-            </tr>
-             <tr>
-                <th>2</th>
-                <td></td><td></td><td></td><td></td><td></td>
-            </tr>
-            <tr>
-                <th>3</th>
-                <td></td><td></td><td></td><td></td><td></td>
-            </tr>
-            <tr>
-                <th>4</th>
-                <td></td><td></td><td></td><td></td><td></td>
-            </tr>
-            <tr>
-                <th>5</th>
-                <td></td><td></td><td></td><td></td><td></td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="text"></div>
-    <div class="sexAge"></div>
-    <div class="BMI"></div>
-</div>
 </body>
 </html>

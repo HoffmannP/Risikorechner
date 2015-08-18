@@ -1,8 +1,63 @@
 $(main);
 
 function main() {
-    $('.calc').click(calc);
+    $('form').submit(run);
+}
+
+function run() {
+    var data = getDataFromForm('form');
+    if (valid(data)) {
+        showResult(new Patient(data));
+    }
     return false;
+}
+
+function valid(data) {
+    var valid = validateNumber(data, 'bpSys', 30, 800) &&
+        validateNumber(data, 'bpDias', 20, 440) &&
+        validateNumber(data, 'age', 0, 130) &&
+        validateNumber(data, 'weight', 30, 400) &&
+        validateNumber(data, 'height', false, 250);
+    if ((data.height > 0.5) && (data.height < 2.2)) {
+        data.height *= 100;
+        $('input#height').val(data.height);
+    }
+    return valid;
+}
+
+function validateNumber(data, name, lowest, highest) {
+    deleteErrors();
+    if (!data[name]) {
+        showError(name, 'Feld muss ausgefüllt werden');
+        return false;
+    }
+    if (isNaN(+data[name])) {
+        data[name] = data[name].replace(',', '.');
+        if (isNaN(+data[name])) {
+            showError(name, 'Feld enthält keine Zahl');
+            return false;
+        }
+        $('input#' + name).val(data[name]);
+    }
+    if (lowest && (+data[name] < lowest)) {
+        showError(name, 'Feld enthält unrealistisch kleine Zahl');
+        return false;
+    }
+    if (highest && (+data[name] > highest)) {
+        showError(name, 'Feld enthält unrealistisch große Zahl');
+        return false;
+    }
+    return true;
+}
+
+function deleteErrors() {
+    $('label[for] span.error').remove();
+}
+
+function showError(field, text) {
+    $("label[for=" + field + "]").append(
+        " <span class='error'>" + text + "</span>"
+    );
 }
 
 function getDataFromForm(jQ) {
@@ -155,11 +210,7 @@ function Patient(data) {
         rcCatText[this.rcCat - 1] + '.';
 }
 
-function calc() {
-    var patient = new Patient(getDataFromForm('.form'));
-
-    console.log(patient);
-
+function showResult(patient) {
     $('.table tbody td').text("");
 
     $('.table tbody')
